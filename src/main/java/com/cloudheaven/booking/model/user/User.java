@@ -4,32 +4,32 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.ZonedDateTime;
 import java.util.Date;
 
-@Getter
-@Setter
+@Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "user_role")
 @Table(name = "users")
+@SuperBuilder
 public class User {
 
     @Id
     @GeneratedValue
-    private Long userId;
+    Long userId;
 
     @Column(unique = true)
-    private String email;
+    String email;
 
     @NotEmpty
     private String password;
 
-    private String name;
+    String name;
 
     private String gender;
 
