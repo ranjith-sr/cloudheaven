@@ -1,6 +1,6 @@
 package com.cloudheaven.booking.controller;
 
-import com.cloudheaven.booking.dto.UserDTO;
+import com.cloudheaven.booking.dto.TravelerDTO;
 import com.cloudheaven.booking.dto.UserRegistrationDTO;
 import com.cloudheaven.booking.exceptions.ResourceNotFoundException;
 import com.cloudheaven.booking.service.TravelerService;
@@ -22,17 +22,17 @@ public class TravelerController {
     }
 
     @GetMapping
-    public List<UserDTO> getAllTravellers(){
+    public List<TravelerDTO> getAllTravellers(){
         return travelerService.getAllTravelers();
     }
 
     @PostMapping
-    public UserDTO createTraveler(@RequestBody UserRegistrationDTO userRegistrationDTO){
+    public TravelerDTO createTraveler(@RequestBody UserRegistrationDTO userRegistrationDTO){
         return travelerService.createTraveler(userRegistrationDTO);
     }
 
     @GetMapping("/{user-id}")
-    public UserDTO getTravelerById(@PathVariable("user-id") Long id) throws ResourceNotFoundException {
+    public TravelerDTO getTravelerById(@PathVariable("user-id") Long id) throws ResourceNotFoundException {
         return travelerService.getTravelerById(id);
     }
 

@@ -1,9 +1,9 @@
 package com.cloudheaven.booking.service;
 
-import com.cloudheaven.booking.dto.UserDTO;
+import com.cloudheaven.booking.dto.TravelerDTO;
 import com.cloudheaven.booking.dto.UserRegistrationDTO;
 import com.cloudheaven.booking.exceptions.ResourceNotFoundException;
-import com.cloudheaven.booking.mapper.TravelerToUserDTOMapper;
+import com.cloudheaven.booking.mapper.TravelerDTOMapper;
 import com.cloudheaven.booking.model.user.Traveler;
 import com.cloudheaven.booking.model.user.UserType;
 import com.cloudheaven.booking.repo.TravelerRepo;
@@ -20,21 +20,21 @@ import java.util.stream.Collectors;
 @Service
 public class TravelerService {
     private final TravelerRepo travelerRepo;
-    private final TravelerToUserDTOMapper travelerToUserDTOMapper;
+    private final TravelerDTOMapper travelerDTOMapper;
 
-    public TravelerService(TravelerRepo travelerRepo , TravelerToUserDTOMapper travelerToUserDTOMapper){
+    public TravelerService(TravelerRepo travelerRepo , TravelerDTOMapper travelerDTOMapper){
         this.travelerRepo = travelerRepo;
-        this.travelerToUserDTOMapper = travelerToUserDTOMapper;
+        this.travelerDTOMapper = travelerDTOMapper;
     }
 
-    public List<UserDTO> getAllTravelers(){
+    public List<TravelerDTO> getAllTravelers(){
         return travelerRepo.findAll()
                 .stream()
-                .map(travelerToUserDTOMapper)
+                .map(travelerDTOMapper)
                 .collect(Collectors.toList());
     }
 
-    public UserDTO createTraveler(UserRegistrationDTO userRegisterDto){
+    public TravelerDTO createTraveler(UserRegistrationDTO userRegisterDto){
         Traveler traveler = Traveler.builder()
                 .name(userRegisterDto.name())
                 .email(userRegisterDto.email())
@@ -45,13 +45,13 @@ public class TravelerService {
                 .account_type(UserType.TRAVELER)
                 .createdAt(ZonedDateTime.now())
                 .build();
-        return travelerToUserDTOMapper.apply(travelerRepo.save(traveler));
+        return travelerDTOMapper.apply(travelerRepo.save(traveler));
     }
 
-    public UserDTO getTravelerById(Long userId) throws ResourceNotFoundException{
+    public TravelerDTO getTravelerById(Long userId) throws ResourceNotFoundException{
         Traveler traveler = travelerRepo.findById(userId)
                 .orElseThrow(()->new ResourceNotFoundException("User Not Found"));
-        return travelerToUserDTOMapper.apply(traveler);
+        return travelerDTOMapper.apply(traveler);
     }
 
     public void deleteUser(Long userId) throws ResourceNotFoundException {

@@ -1,6 +1,6 @@
 package com.cloudheaven.booking.controller;
 
-import com.cloudheaven.booking.dto.UserDTO;
+import com.cloudheaven.booking.dto.HostDTO;
 import com.cloudheaven.booking.dto.UserRegistrationDTO;
 import com.cloudheaven.booking.exceptions.ResourceNotFoundException;
 import com.cloudheaven.booking.service.HostService;
@@ -23,17 +23,17 @@ public class HostController {
     }
 
     @GetMapping
-    public List<UserDTO> getAllHosts(){
+    public List<HostDTO> getAllHosts(){
         return hostService.getAllHosts();
     }
 
     @PostMapping
-    public UserDTO createHost(@RequestBody UserRegistrationDTO userRegistrationDTO){
+    public HostDTO createHost(@RequestBody UserRegistrationDTO userRegistrationDTO){
         return hostService.createHost(userRegistrationDTO);
     }
 
     @GetMapping("/{user-id}")
-    public UserDTO getUserById(@PathVariable("user-id") Long id) throws ResourceNotFoundException {
+    public HostDTO getUserById(@PathVariable("user-id") Long id) throws ResourceNotFoundException {
         return hostService.getUserById(id);
     }
 

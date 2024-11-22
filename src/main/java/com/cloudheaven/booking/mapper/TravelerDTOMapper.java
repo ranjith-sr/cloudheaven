@@ -1,17 +1,17 @@
 package com.cloudheaven.booking.mapper;
 
-import com.cloudheaven.booking.dto.UserDTO;
+import com.cloudheaven.booking.dto.TravelerDTO;
 import com.cloudheaven.booking.model.user.Traveler;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Function;
 
 @Component
-public class TravelerToUserDTOMapper implements Function<Traveler, UserDTO> {
+public class TravelerDTOMapper implements Function<Traveler, TravelerDTO> {
 
     @Override
-    public UserDTO apply(Traveler traveler) {
-        return UserDTO.builder()
+    public TravelerDTO apply(Traveler traveler) {
+        return TravelerDTO.builder()
                 .userId(traveler.getUserId())
                 .name(traveler.getName())
                 .email(traveler.getEmail())

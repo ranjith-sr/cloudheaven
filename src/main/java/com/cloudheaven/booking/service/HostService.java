@@ -1,9 +1,9 @@
 package com.cloudheaven.booking.service;
 
-import com.cloudheaven.booking.dto.UserDTO;
+import com.cloudheaven.booking.dto.HostDTO;
 import com.cloudheaven.booking.dto.UserRegistrationDTO;
 import com.cloudheaven.booking.exceptions.ResourceNotFoundException;
-import com.cloudheaven.booking.mapper.HostToUserDTOMapper;
+import com.cloudheaven.booking.mapper.HostDTOMapper;
 import com.cloudheaven.booking.model.user.Host;
 import com.cloudheaven.booking.model.user.UserType;
 import com.cloudheaven.booking.repo.HostRepo;
@@ -20,21 +20,21 @@ import java.util.stream.Collectors;
 @Service
 public class HostService {
     private final HostRepo hostRepo;
-    private final HostToUserDTOMapper hostToUserDTOMapper;
+    private final HostDTOMapper hostDTOMapper;
 
-    public HostService(HostRepo hostRepo , HostToUserDTOMapper hostToUserDTOMapper){
+    public HostService(HostRepo hostRepo , HostDTOMapper hostDTOMapper){
         this.hostRepo = hostRepo;
-        this.hostToUserDTOMapper = hostToUserDTOMapper;
+        this.hostDTOMapper = hostDTOMapper;
     }
 
-    public List<UserDTO> getAllHosts(){
+    public List<HostDTO> getAllHosts(){
         return hostRepo.findAll()
                 .stream()
-                .map(hostToUserDTOMapper)
+                .map(hostDTOMapper)
                 .collect(Collectors.toList());
     }
 
-    public UserDTO createHost(UserRegistrationDTO userRegistrationDTO){
+    public HostDTO createHost(UserRegistrationDTO userRegistrationDTO){
         Host host = Host.builder()
                 .name(userRegistrationDTO.name())
                 .email(userRegistrationDTO.email())
@@ -45,13 +45,13 @@ public class HostService {
                 .account_type(UserType.HOST)
                 .createdAt(ZonedDateTime.now())
                 .build();
-        return hostToUserDTOMapper.apply(hostRepo.save(host));
+        return hostDTOMapper.apply(hostRepo.save(host));
     }
 
-    public UserDTO getUserById(Long userId) throws ResourceNotFoundException{
+    public HostDTO getUserById(Long userId) throws ResourceNotFoundException{
         Host host = hostRepo.findById(userId)
                 .orElseThrow(()->new ResourceNotFoundException("User Not Found"));
-        return hostToUserDTOMapper.apply(host);
+        return hostDTOMapper.apply(host);
     }
 
     public void deleteUser(Long userId) throws ResourceNotFoundException {
