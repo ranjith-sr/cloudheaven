@@ -44,6 +44,7 @@ public class HostService {
                 .dob(userRegistrationDTO.dob())
                 .account_type(UserType.HOST)
                 .createdAt(ZonedDateTime.now())
+                .properties(new ArrayList<>())
                 .build();
         return hostDTOMapper.apply(hostRepo.save(host));
     }

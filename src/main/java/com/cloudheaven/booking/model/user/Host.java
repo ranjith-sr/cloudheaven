@@ -1,8 +1,12 @@
 package com.cloudheaven.booking.model.user;
 
+import com.cloudheaven.booking.model.property.Property;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -14,7 +18,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Host extends User{
 
-    //For Sample Data
-    String HostData;
+    @OneToMany(mappedBy = "host")
+    @JsonManagedReference
+    List<Property> properties;
 
 }
