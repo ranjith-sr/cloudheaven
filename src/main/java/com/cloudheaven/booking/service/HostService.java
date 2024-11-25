@@ -7,6 +7,7 @@ import com.cloudheaven.booking.mapper.HostDTOMapper;
 import com.cloudheaven.booking.model.user.Host;
 import com.cloudheaven.booking.model.user.UserType;
 import com.cloudheaven.booking.repo.HostRepo;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
@@ -21,10 +22,16 @@ import java.util.stream.Collectors;
 public class HostService {
     private final HostRepo hostRepo;
     private final HostDTOMapper hostDTOMapper;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public HostService(HostRepo hostRepo , HostDTOMapper hostDTOMapper){
+    public HostService(
+            HostRepo hostRepo ,
+            HostDTOMapper hostDTOMapper ,
+            BCryptPasswordEncoder passwordEncoder
+    ){
         this.hostRepo = hostRepo;
         this.hostDTOMapper = hostDTOMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<HostDTO> getAllHosts(){
@@ -38,7 +45,7 @@ public class HostService {
         Host host = Host.builder()
                 .name(userRegistrationDTO.name())
                 .email(userRegistrationDTO.email())
-                .password(userRegistrationDTO.password())
+                .password(passwordEncoder.encode(userRegistrationDTO.password()))
                 .gender(userRegistrationDTO.gender())
                 .mobile_no(userRegistrationDTO.mobileNo())
                 .dob(userRegistrationDTO.dob())
