@@ -12,3 +12,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+paypal:
+  client:
+    id : AbXzYP7lK5SMk5TORyYlsbPhtIEMttfdYd0BEH6sZjFI5Kd7JVWQvcvl7ATLbsZdiRl2p3SMepmV8dGQ
+    secret: EC7VDPKKSelNEyevmVpS_yahhFgdFCT94y8Vb4501q4z_53lsp-iONDx-gyoLJyB_0y3vwFauYIRlsEu
+  mode: sandbox

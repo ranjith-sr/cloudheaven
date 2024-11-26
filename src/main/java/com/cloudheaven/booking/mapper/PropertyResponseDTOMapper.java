@@ -19,6 +19,7 @@ public class PropertyResponseDTOMapper implements Function<Property, PropertyRes
                 .payPerNight(property.getPayPerNight())
                 .payPerFullDay(property.getPayPerFullDay())
                 .address(property.getAddress())
+                .payments(property.getPropertyPaymentList())
                 .build();
     }
 }

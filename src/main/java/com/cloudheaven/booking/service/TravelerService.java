@@ -12,9 +12,7 @@ import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,6 +42,7 @@ public class TravelerService {
                 .dob(userRegisterDto.dob())
                 .account_type(UserType.TRAVELER)
                 .createdAt(ZonedDateTime.now())
+                .wishList(Collections.emptySet())
                 .build();
         return travelerDTOMapper.apply(travelerRepo.save(traveler));
     }

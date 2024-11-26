@@ -1,9 +1,12 @@
 package com.cloudheaven.booking.model.property;
 
+import com.cloudheaven.booking.model.payment.PropertyPayment;
 import com.cloudheaven.booking.model.user.Host;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -36,4 +39,9 @@ public class Property {
     @JoinColumn(name = "user_id")
     @JsonBackReference
     Host host;
+
+    @OneToMany(mappedBy = "property")
+    @JsonManagedReference
+    List<PropertyPayment> propertyPaymentList;
+
 }
