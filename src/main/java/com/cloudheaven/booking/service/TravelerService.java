@@ -7,22 +7,31 @@ import com.cloudheaven.booking.mapper.TravelerDTOMapper;
 import com.cloudheaven.booking.model.user.Traveler;
 import com.cloudheaven.booking.model.user.UserType;
 import com.cloudheaven.booking.repo.TravelerRepo;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 public class TravelerService {
     private final TravelerRepo travelerRepo;
     private final TravelerDTOMapper travelerDTOMapper;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public TravelerService(TravelerRepo travelerRepo , TravelerDTOMapper travelerDTOMapper){
+    public TravelerService(
+            TravelerRepo travelerRepo ,
+            TravelerDTOMapper travelerDTOMapper,
+            BCryptPasswordEncoder passwordEncoder
+    ){
         this.travelerRepo = travelerRepo;
         this.travelerDTOMapper = travelerDTOMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<TravelerDTO> getAllTravelers(){
@@ -36,10 +45,11 @@ public class TravelerService {
         Traveler traveler = Traveler.builder()
                 .name(userRegisterDto.name())
                 .email(userRegisterDto.email())
-                .password(userRegisterDto.password())
+                .password(passwordEncoder.encode(userRegisterDto.password()))
                 .gender(userRegisterDto.gender())
                 .mobile_no(userRegisterDto.mobileNo())
                 .dob(userRegisterDto.dob())
+                .wishList(new HashSet<>())
                 .account_type(UserType.TRAVELER)
                 .createdAt(ZonedDateTime.now())
                 .wishList(Collections.emptySet())
