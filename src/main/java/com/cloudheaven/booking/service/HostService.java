@@ -3,6 +3,7 @@ package com.cloudheaven.booking.service;
 import com.cloudheaven.booking.dto.HostDTO;
 import com.cloudheaven.booking.dto.UserRegistrationDTO;
 import com.cloudheaven.booking.exceptions.ResourceNotFoundException;
+import com.cloudheaven.booking.exceptions.UserAlreadyExistsException;
 import com.cloudheaven.booking.mapper.HostDTOMapper;
 import com.cloudheaven.booking.model.user.Host;
 import com.cloudheaven.booking.model.user.UserType;
@@ -42,6 +43,10 @@ public class HostService {
     }
 
     public HostDTO createHost(UserRegistrationDTO userRegistrationDTO){
+
+        if(hostRepo.countByEmail(userRegistrationDTO.email()) == 1)
+            throw new UserAlreadyExistsException(userRegistrationDTO.email());
+
         Host host = Host.builder()
                 .name(userRegistrationDTO.name())
                 .email(userRegistrationDTO.email())

@@ -4,6 +4,8 @@ import com.cloudheaven.booking.dto.HostDTO;
 import com.cloudheaven.booking.dto.UserRegistrationDTO;
 import com.cloudheaven.booking.exceptions.ResourceNotFoundException;
 import com.cloudheaven.booking.service.HostService;
+import com.cloudheaven.booking.util.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +30,11 @@ public class HostController {
     }
 
     @PostMapping
-    public HostDTO createHost(@RequestBody UserRegistrationDTO userRegistrationDTO){
-        return hostService.createHost(userRegistrationDTO);
+    public ApiResponse<HostDTO> createHost(
+            @Valid @RequestBody UserRegistrationDTO userRegistrationDTO
+    ){
+        HostDTO hostDTO = hostService.createHost(userRegistrationDTO);
+        return new ApiResponse<>("User registration was successful.", HttpStatus.CREATED.value(), hostDTO);
     }
 
     @GetMapping("/{user-id}")

@@ -11,6 +11,7 @@ import java.util.List;
 public interface TravelerRepo extends JpaRepository<Traveler , Long> {
 
     @Query("SELECT traveler.wishList FROM Traveler traveler WHERE traveler.userId = :userId")
-    public List<Property> findWishListByUserId(Long userId);
+    List<Property> findWishListByUserId(Long userId);
 
+    int countByEmail(String email);
 }

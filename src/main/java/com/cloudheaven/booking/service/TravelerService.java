@@ -3,6 +3,7 @@ package com.cloudheaven.booking.service;
 import com.cloudheaven.booking.dto.TravelerDTO;
 import com.cloudheaven.booking.dto.UserRegistrationDTO;
 import com.cloudheaven.booking.exceptions.ResourceNotFoundException;
+import com.cloudheaven.booking.exceptions.UserAlreadyExistsException;
 import com.cloudheaven.booking.mapper.TravelerDTOMapper;
 import com.cloudheaven.booking.model.user.Traveler;
 import com.cloudheaven.booking.model.user.UserType;
@@ -13,9 +14,7 @@ import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,6 +41,10 @@ public class TravelerService {
     }
 
     public TravelerDTO createTraveler(UserRegistrationDTO userRegisterDto){
+
+        if(travelerRepo.countByEmail(userRegisterDto.email()) == 1)
+            throw new UserAlreadyExistsException(userRegisterDto.email());
+
         Traveler traveler = Traveler.builder()
                 .name(userRegisterDto.name())
                 .email(userRegisterDto.email())

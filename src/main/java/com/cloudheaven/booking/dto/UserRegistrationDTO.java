@@ -23,7 +23,7 @@ public record UserRegistrationDTO(
 
         @NotNull
         @JsonFormat(pattern = "dd-MM-yyyy")
-        @Past(message = "Date Of Birth should be in past")
+        @Past(message = "Date of birth should be in past")
         Date dob,
 
         @NotNull

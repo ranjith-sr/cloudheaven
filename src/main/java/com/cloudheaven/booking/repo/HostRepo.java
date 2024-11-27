@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface HostRepo extends JpaRepository<Host,Long> {
 
+    int countByEmail(String email);
+
 }

@@ -4,6 +4,8 @@ import com.cloudheaven.booking.dto.TravelerDTO;
 import com.cloudheaven.booking.dto.UserRegistrationDTO;
 import com.cloudheaven.booking.exceptions.ResourceNotFoundException;
 import com.cloudheaven.booking.service.TravelerService;
+import com.cloudheaven.booking.util.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +29,12 @@ public class TravelerController {
     }
 
     @PostMapping
-    public TravelerDTO createTraveler(@RequestBody UserRegistrationDTO userRegistrationDTO){
-        return travelerService.createTraveler(userRegistrationDTO);
+    @ResponseStatus(HttpStatus.CREATED)
+    public ApiResponse<TravelerDTO> createTraveler(
+            @Valid @RequestBody UserRegistrationDTO userRegistrationDTO
+    ){
+        TravelerDTO travelerDTO = travelerService.createTraveler(userRegistrationDTO);
+        return new ApiResponse<>("User registration was successful.", HttpStatus.CREATED.value(), travelerDTO);
     }
 
     @GetMapping("/{user-id}")
