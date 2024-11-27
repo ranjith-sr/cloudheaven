@@ -17,6 +17,7 @@ public class TravelerDTOMapper implements Function<Traveler, TravelerDTO> {
 
     @Override
     public TravelerDTO apply(Traveler traveler) {
+
         return TravelerDTO.builder()
                 .userId(traveler.getUserId())
                 .name(traveler.getName())
@@ -26,6 +27,8 @@ public class TravelerDTOMapper implements Function<Traveler, TravelerDTO> {
                 .dob(traveler.getDob())
                 .createdAt(traveler.getCreatedAt())
                 .wishList(traveler.getWishList().stream().map(propertyResponseDTOMapper).collect(Collectors.toSet()))
+                .payments(traveler.getPropertyPaymentList())
                 .build();
     }
+
 }

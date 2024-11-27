@@ -14,7 +14,6 @@ import org.springframework.util.ReflectionUtils;
 import java.lang.reflect.Field;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -53,6 +52,7 @@ public class TravelerService {
                 .wishList(new HashSet<>())
                 .account_type(UserType.TRAVELER)
                 .createdAt(ZonedDateTime.now())
+                .wishList(Collections.emptySet())
                 .build();
         return travelerDTOMapper.apply(travelerRepo.save(traveler));
     }
